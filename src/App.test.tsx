@@ -1,11 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
 import App from '~/App';
 
-test('renders hello world', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/hello world/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App Component', () => {
+  it('renders', () => {
+    render(<App />);
+    const title = screen.getByText(/encontre usuários no github/i);
+    expect(title).toBeInTheDocument();
+  });
 });
