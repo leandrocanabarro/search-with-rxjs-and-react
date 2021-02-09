@@ -26,16 +26,16 @@ export default function Home() {
   React.useEffect(() => {
     const observable = subject$
       .pipe(
-        map((term: string) => term.trim()),
+        map((searchTerm: string) => searchTerm.trim()),
         distinctUntilChanged(),
-        filter((term: string) => term.length >= 3),
-        debounceTime(200),
-        switchMap((term) =>
-          term
+        filter((searchTerm: string) => searchTerm.length >= 3),
+        debounceTime(1000),
+        switchMap((searchTerm) =>
+          searchTerm
             ? merge(
                 of({ loading: true, noResults: false }),
                 fetch(
-                  `https://api.github.com/search/users?q=${term}&per_page=1000&sort=ASC`,
+                  `https://api.github.com/search/users?q=${searchTerm}&per_page=500&sort=ASC`,
                 ).then((response: any) => {
                   if (response.status === 200) {
                     return response.json().then((data: ResultsProps) => ({
@@ -51,8 +51,8 @@ export default function Home() {
             : empty(),
         ),
       )
-      .subscribe((newState: HomeProps) => {
-        setState((previousState) => ({ ...previousState, ...newState }));
+      .subscribe((results: HomeProps) => {
+        setState((previousResults) => ({ ...previousResults, ...results }));
       });
 
     return () => {
