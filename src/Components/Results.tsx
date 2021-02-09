@@ -3,7 +3,13 @@ import * as React from 'react';
 export default function Results({ data, noResults }: ResultsProps) {
   return (
     <div className="mb-24">
-      {noResults && <div> No results for this search </div>}
+      {noResults ? (
+        <div className="text-center mt-4">
+          <p className="text-gray-600 font-bold">
+            Nenhum registro foi encontrado para essa pesquisa.
+          </p>
+        </div>
+      ) : null}
       <div className="grid grid-cols-4 gap-12">
         {data.map(({ login, avatar_url }) => (
           <div
